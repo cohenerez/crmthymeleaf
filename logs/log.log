@@ -1,0 +1,35 @@
+26-05-2020 13:10:00.607 [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer.logDuplicateJsonObjectsWarning - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/erezc/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/erezc/.m2/repository/org/json/json/20140107/json-20140107.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+26-05-2020 13:10:00.641 [main] INFO  c.e.t.c.CrmThymeleafApplicationTests.logStarting - Starting CrmThymeleafApplicationTests on DESKTOP-G1RD35M with PID 8484 (started by erezc in C:\Users\erezc\crmthymeleaf)
+26-05-2020 13:10:00.648 [main] INFO  c.e.t.c.CrmThymeleafApplicationTests.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+26-05-2020 13:10:01.805 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data repositories in DEFAULT mode.
+26-05-2020 13:10:01.933 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 118ms. Found 7 repository interfaces.
+26-05-2020 13:10:03.446 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.retry.annotation.RetryConfiguration' of type [org.springframework.retry.annotation.RetryConfiguration$$EnhancerBySpringCGLIB$$16117b27] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+26-05-2020 13:10:03.518 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$204de302] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+26-05-2020 13:10:04.234 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 13:10:04.619 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 13:10:04.809 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+26-05-2020 13:10:04.911 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate Core {5.3.7.Final}
+26-05-2020 13:10:04.914 [main] INFO  org.hibernate.cfg.Environment.<clinit> - HHH000206: hibernate.properties not found
+26-05-2020 13:10:05.193 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+26-05-2020 13:10:05.567 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+26-05-2020 13:10:07.157 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 13:10:08.828 [main] INFO  o.h.h.i.QueryTranslatorFactoryInitiator.initiateService - HHH000397: Using ASTQueryTranslatorFactory
+26-05-2020 13:10:11.481 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@174b8d0e, org.springframework.security.web.context.SecurityContextPersistenceFilter@413eaf5d, org.springframework.security.web.header.HeaderWriterFilter@47eae91d, org.springframework.security.web.csrf.CsrfFilter@1e194966, org.springframework.security.web.authentication.logout.LogoutFilter@4bab78ce, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@702cfbde, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@33891646, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@71f29d91, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@112530c3, org.springframework.security.web.session.SessionManagementFilter@472719df, org.springframework.security.web.access.ExceptionTranslationFilter@27fc0217, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@36638b59]
+26-05-2020 13:10:12.788 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 13:10:12.934 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 13:10:13.413 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping.<init> - Adding welcome page template: index
+26-05-2020 13:10:14.220 [main] INFO  c.e.t.c.CrmThymeleafApplicationTests.logStarted - Started CrmThymeleafApplicationTests in 14.193 seconds (JVM running for 15.876)
+26-05-2020 13:10:14.424 [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 13:10:14.427 [Thread-3] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 13:10:14.429 [Thread-3] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 13:10:14.443 [Thread-3] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.

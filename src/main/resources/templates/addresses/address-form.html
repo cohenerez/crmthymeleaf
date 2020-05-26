@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+
+    <!-- Title Page-->
+    <title>Add New Customer</title>
+
+    <!-- Icons font CSS-->
+    <link href="../../vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="../../vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="../../vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../../vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="../../css/customer.main.css" rel="stylesheet" media="all">
+  
+    
+</head>
+<body>
+
+
+
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Customer Directory</h2>
+                </div>
+                <div class="card-body">
+                    <form  name="myform"  action = "#" th:action = "@{/addresses/showFormForAddCustomer}"  th:object= "${address}" method = "GET">
+                         <div>
+                              <input type="hidden" th:field="*{id}" >
+                          </div>
+                        
+             
+        <div class="form-row">
+            <div class="name">City</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{city}"  name="city"  placeholder="City">
+                 </div>
+           </div>
+     </div>
+
+     <div class="form-row">
+            <div class="name">Street</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{street}" name="street"  placeholder="Street">
+                 </div>
+           </div>
+     </div>
+     
+          <div class="form-row">
+            <div class="name">Zip</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{zip}" name="zip"  placeholder="Zip">
+                </div>
+           </div>
+     </div>
+ 
+   <div class="form-row">
+         <div class="name">Country</div>
+                 <div class="value">
+                  <div class="input-group">
+                   <div class="rs-select2 js-select-simple select--no-search">
+                   <select name="country" id="idCountry"  th:field="*{country}" >
+                     <option  value="" > Country </option>
+                      <option th:each="country : ${countries}"
+                      th:value="${country}"
+                       th:attr="value = ${country}"
+                        th:id="${country.code}"
+                        th:whith ="tempcountry = ${country.getIndex}"
+                         th:text="${ country.name + '  ' + tempcountry}">
+                    </option> 
+                  </select>
+            <div class="select-dropdown"></div>
+            </div>
+          </div>
+       </div>
+      </div>
+        
+        
+         <div class="form-row">
+         <div class="name">Country</div>
+                 <div class="value">
+                  <div class="input-group">
+                   <div class="rs-select2 js-select-simple select--no-search">
+                   <select name="country" id="idCountry"  th:field="*{country}" >
+                     <option  value="" > Country </option>
+                      <option th:each="country : ${countries}"
+                       th:value="${country}"
+                       th:attr="value = ${country}"
+                        th:id="${country.code}"
+                         th:text="${ country.name }">
+                    </option> 
+                  </select>
+            <div class="select-dropdown"></div>
+            </div>
+          </div>
+       </div>
+      </div> 
+   
+      
+       
+      <div class="form-row">
+            <div class="name">Territory</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{territory}" name="territory"  placeholder="Territory">
+              </div>
+           </div>
+     </div>
+             
+                       
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Save</button>
+                        </div>
+                           <br><br><br>
+                           
+                           
+                                 
+                              <h4 class="col-md-6 position-static p-4 pl-md-0">
+                              <a  th:href= "@{/customers/list}" class="stretched-link">Back To Customers Form</a>
+                             </h4>
+                                       
+                                                    
+                    </form>
+                </div>
+              </div>    
+                    
+            </div>
+        </div>
+ 
+   
+    
+
+    <!-- Jquery JS-->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="../../vendor/select2/select2.min.js"></script>
+    <script src="../../vendor/datepicker/moment.min.js"></script>
+    <script src="../../vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="../../js/global.js"></script>
+  
+
+</body>
+
+</html>

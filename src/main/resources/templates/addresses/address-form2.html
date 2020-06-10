@@ -11,8 +11,7 @@
     <title>Add  Customer Adress</title>
 
       
-        
-    <!-- Icons font CSS-->
+     <!-- Icons font CSS-->
     <link href="../../vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="../../vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <!-- Font special for pages-->
@@ -20,7 +19,11 @@
 
     <!-- Vendor CSS-->
     <link href="../../vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="../../vendor/bootstrap/css/bootstrap.min.css.map" rel="stylesheet" media="all">
+    <link href="../../vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="../../css/customer.main.css" rel="stylesheet" media="all">
+    
 
     <!-- Main CSS-->
     <link href="../../css/customer.main.css" rel="stylesheet" media="all">
@@ -30,8 +33,7 @@ $(document).ready(function(){
 
 	$('#comboboxCountry').on('change', function(){
 		var countryId = $(this).val();
-		var countryName = $('#comboboxCountry').find(":selected").text();
-		var url = "./country/" + countryId + "/"  + countryName;
+		var url = "./country/" + countryId
 		$.ajax({
 			
 			type: 'GET',
@@ -42,43 +44,20 @@ $(document).ready(function(){
 				var s = '';
 				for(var i = 0; i < result.length; i++) {
 					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
-					
 				}
 				$('#comboboxState').html(s);
 			}
 		});
 	});
 
-	
-	
-	$('#comboboxState').on('change', function(){
-		var stateId = $(this).val();
-		var stateName = $('#comboboxState').find(":selected").text();
-		var url = "./state/" + stateId + "/"  + stateName;
-	
-		
-		$.ajax({
-			type: 'GET',
-			url: url,
-			success: function(result) {
-				var result = JSON.parse(result);
-				var s = '';
-				for(var i = 0; i < result.length; i++) {
-					s += '<option value="' + result[i].name + '">' + result[i].name + '</option>';
-				}
-				$('#comboboxCity').html(s);
-			}
-		});
-	});
-	
 });
-</script>
+  </script>
     
   
     
 </head>
 <body>
-<div th:fragment="addressform"  class="address-block">
+
     
 
     <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
@@ -88,14 +67,38 @@ $(document).ready(function(){
                     <h2 class="title">Customer Directory</h2>
                 </div>
                 <div class="card-body">
-                    <form  name="myform"  action = "#" th:action = "@{/addresses/save}"  th:object= "${address}" method = "POST">
+                    <form  name="myform"  action = "#" th:action = "@{/addresses/showFormForAddCustomer}"  th:object= "${address}" method = "GET">
                          <div>
                               <input type="hidden" th:field="*{id}" >
                           </div>
                         
              
-       
+        <div class="form-row">
+            <div class="name">City</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{city}"  name="city"  placeholder="City">
+                 </div>
+           </div>
+     </div>
+
+     <div class="form-row">
+            <div class="name">Street</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{street}" name="street"  placeholder="Street">
+                 </div>
+           </div>
+     </div>
      
+          <div class="form-row">
+            <div class="name">Zip</div>
+           <div class="value">
+             <div class="input-group">
+                <input class="input--style-5" type="text" th:field= "*{zip}" name="zip"  placeholder="Zip">
+                </div>
+           </div>
+     </div>
  
        <div class="form-row">
                             <div class="name">Country</div>
@@ -106,9 +109,9 @@ $(document).ready(function(){
                                             <option  value="" >Choose country </option>
                                             <option th:each="country : ${countries}"
                                                     th:value="${country.id}"
-                                                    th:attr="value = ${country.name}"
-                                                    th:id="${country.name}"
-                                                    th:text="${country.name}">
+                                                    th:attr="value = ${country.id}"
+                                                    th:id="${country.id}"
+                                                    th:text="${country.id + '  ' + country.name }">
                                             </option> 
                                         </select>
                                         <div class="select-dropdown"></div>
@@ -117,57 +120,19 @@ $(document).ready(function(){
                             </div>
                         </div>
              
-             
-                      <div class="form-row">
-                            <div class="name">State</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxState" name="state" th:field="*{state}"> 
-                                          <option  value="" >Choose state </option>   
-                                                                 
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                     <div class="form-row">
-                            <div class="name">City</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxCity" name="city" th:field="*{city}"> 
-                                          <option  value="" >Choose city </option>   
-                                                                       
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-       
-        
-        <div class="form-row">
-            <div class="name">Street</div>
-           <div class="value">
-             <div class="input-group">
-                <input class="input--style-5" type="text" th:field= "*{street}" name="street"  placeholder="Street">
-                 </div>
-           </div>
-     </div>
-     
+              <div>
+              <table>
+              <tr>
+				<td>State</td>
+				<td>
+					<select id="comboboxState" style="width:200px"></select>
+				</td>
+			</tr>
+			<tr>
+              
+              </table>
+          </div>
       
-     
-          <div class="form-row">
-            <div class="name">Zip</div>
-           <div class="value">
-             <div class="input-group">
-                <input class="input--style-5" type="text" th:field= "*{zip}" name="zip"  placeholder="Zip">
-                </div>
-           </div>
-       </div>               
        
       <div class="form-row">
             <div class="name">Territory</div>
@@ -180,7 +145,7 @@ $(document).ready(function(){
              
                        
                         <div>
-                            <button  class="btn btn--radius-2 btn--red" type="submit">Save</button>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Save</button>
                         </div>
                            <br><br><br>
                            
@@ -198,19 +163,21 @@ $(document).ready(function(){
             </div>
         </div>
  
-      <!-- Jquery JS-->
-    <script src="../../vendor/jquery/jquery.min.js"></script>
-     <script src="../../vendor/jquery/jquery-3.4.1.js"></script>
+    
      
     
+   
+    <!-- Jquery JS-->
+    <script src="../../vendor/jquery/jquery-3.4.1.js"></script>
+    <script src="../../vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
     <script src="../../vendor/select2/select2.min.js"></script>
-    
-   
+    <script src="../../vendor/datepicker/moment.min.js"></script>
+    <script src="../../vendor/datepicker/daterangepicker.js"></script>
 
     <!-- Main JS-->
     <script src="../../js/global.js"></script>
-   </div> 
+    
 </body>
 
 </html>

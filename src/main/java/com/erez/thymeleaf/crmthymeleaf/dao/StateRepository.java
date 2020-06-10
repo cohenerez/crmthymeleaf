@@ -14,6 +14,6 @@ import com.erez.thymeleaf.crmthymeleaf.entity.StateDTO;
 public interface StateRepository extends CrudRepository<State, Integer> {
 	
 	@Query("select new com.erez.thymeleaf.crmthymeleaf.entity.StateDTO(id, name) from State where country.id = :id")
-	public List<StateDTO> findByCountry(@Param("id") int id);
+	public List<StateDTO> findByCountryId(@Param("id") Integer id);
 
 }

@@ -23,10 +23,12 @@ public class CityServiceImpl  implements CityService{
 	}
 
 
-
 	@Override
-	public List<CityDTO> findByState(int id) {
-		return cityRepository.findByState(id);
+	public List<CityDTO> findByStateId(Integer id) {
+		return cityRepository.findByStateId(id);
 	}
 
+
+
+	
 }

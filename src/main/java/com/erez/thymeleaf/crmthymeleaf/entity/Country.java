@@ -28,6 +28,9 @@ public class Country implements java.io.Serializable {
 	@Column(name = "sortname", nullable = false, length = 10)
 	private String sortname;
 	
+	@Column(name = "region", nullable = false, length = 250)
+	private String region;
+	
 	@Column(name = "phonecode", nullable = false, length = 10)
 	private int phonecode;
 	
@@ -90,6 +93,15 @@ public class Country implements java.io.Serializable {
 	}
 
 	
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
 	public Set<State> getStates() {
 		return this.states;
 	}

@@ -17,15 +17,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erez.thymeleaf.crmthymeleaf.entity.Address;
 import com.erez.thymeleaf.crmthymeleaf.entity.Customer;
 import com.erez.thymeleaf.crmthymeleaf.entity.SalesRepresentative;
+import com.erez.thymeleaf.crmthymeleaf.service.CityService;
+import com.erez.thymeleaf.crmthymeleaf.service.CountryService;
 import com.erez.thymeleaf.crmthymeleaf.service.CustomerService;
 import com.erez.thymeleaf.crmthymeleaf.service.SalesRepresentativeService;
+import com.erez.thymeleaf.crmthymeleaf.service.StateService;
+import com.google.gson.Gson;
 
 
 
@@ -37,15 +43,23 @@ public class CustomrController {
 	private CustomerService customerService;
 	private SalesRepresentativeService salesRepresentativeService;
 	private List<SalesRepresentative> theSalesRepresentatives;
-	
+	private CountryService countryService;
+	private StateService stateService;
+	private CityService cityService;
+	private String counttryName;
+	private String stateName;
 
 	@Autowired
 	public CustomrController(CustomerService theCustomerService,
-			SalesRepresentativeService theSalesRepresentativeService ) {
+			SalesRepresentativeService theSalesRepresentativeService, 
+			CountryService theCountryService,StateService theStateService,
+			CityService theCityService) {
 
 		customerService = theCustomerService;
 		salesRepresentativeService = theSalesRepresentativeService;
-
+        countryService = theCountryService;
+        stateService = theStateService;
+        cityService = theCityService;
 	}
 
 	@InitBinder
@@ -65,6 +79,7 @@ public class CustomrController {
 
 		theModel.addAttribute("customer", theCustomer);
 		theModel.addAttribute("salesRepresentatives", theSalesRepresentatives);
+		theModel.addAttribute("countries", countryService.findAll());
 				
 		return "customers/customer-form";
 	}
@@ -142,7 +157,11 @@ public class CustomrController {
 			return "customers/customer-form";
 
 		}
-		   customerService.saveCustomer(theCustomer);
+		theCustomer.getAddress().setCountry(counttryName);
+		theCustomer.getAddress().setState(stateName);
+		counttryName ="";
+		stateName= "";
+		customerService.saveCustomer(theCustomer);
 		  
 		   return "redirect:/customers/list";
 	}
@@ -150,12 +169,32 @@ public class CustomrController {
 	@ExceptionHandler({ Exception.class })
 	@GetMapping("/showFormForUpdatCustomer")
 	public String showFormForUpdateCustomer(@RequestParam("custumerId") Integer  theId ,Model theModel ) {
-
+		
 		Customer theCustomer = customerService.getCustomer(theId);
 		theModel.addAttribute("customer",theCustomer);
 		return "customers/customer-form";
 
 	}
 
+	@ResponseBody
+	@GetMapping("country/{id}/{name}")
+	public String loadStatesByCountry(@PathVariable Integer id, @PathVariable String name) {
+		counttryName ="";
+		Gson gson = new Gson();
+		counttryName =name;
+		return gson.toJson(stateService.findByCountryId(id));
+	}
 
+	@ResponseBody
+	@GetMapping("state/{id}/{name}")
+	public String loadCitiesByState(@PathVariable Integer id, @PathVariable String name) {
+		stateName ="";
+		System.out.println("State name and id: "+ " " + id +"   " + name);
+		stateName = name;
+		Gson gson = new Gson();
+		return gson.toJson(cityService.findByStateId(id)); 
+
+}
+	
+	
 }

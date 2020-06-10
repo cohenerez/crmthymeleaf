@@ -2,17 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
-    
-    <!-- Title Page-->
-    <title>Add  Customer Adress</title>
-
-      
-        
-    <!-- Icons font CSS-->
+     <!-- Icons font CSS-->
     <link href="../../vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="../../vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <!-- Font special for pages-->
@@ -31,7 +21,9 @@ $(document).ready(function(){
 	$('#comboboxCountry').on('change', function(){
 		var countryId = $(this).val();
 		var countryName = $('#comboboxCountry').find(":selected").text();
-		var url = "./country/" + countryId + "/"  + countryName;
+		var url = "addresses/country" + countryId;
+		 alert(url);
+
 		$.ajax({
 			
 			type: 'GET',
@@ -54,7 +46,7 @@ $(document).ready(function(){
 	$('#comboboxState').on('change', function(){
 		var stateId = $(this).val();
 		var stateName = $('#comboboxState').find(":selected").text();
-		var url = "./state/" + stateId + "/"  + stateName;
+		var url = "/addresses/state/" + stateId + "/"  + stateName;
 	
 		
 		$.ajax({
@@ -74,30 +66,14 @@ $(document).ready(function(){
 });
 </script>
     
-  
-    
 </head>
 <body>
 <div th:fragment="addressform"  class="address-block">
-    
-
-    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-        <div class="wrapper wrapper--w790">
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Customer Directory</h2>
-                </div>
-                <div class="card-body">
-                    <form  name="myform"  action = "#" th:action = "@{/addresses/save}"  th:object= "${address}" method = "POST">
-                         <div>
-                              <input type="hidden" th:field="*{id}" >
-                          </div>
-                        
-             
-       
+   
+   <form  name="addressesform"  action = "#" th:action = "@{/addresses/shwoFromToAddAddress}"  th:object= "${address}" method = "GET">
+                         
      
- 
-       <div class="form-row">
+                     <div class="form-row">
                             <div class="name">Country</div>
                             <div class="value">
                                 <div class="input-group">
@@ -177,40 +153,10 @@ $(document).ready(function(){
               </div>
            </div>
      </div>
-             
-                       
-                        <div>
-                            <button  class="btn btn--radius-2 btn--red" type="submit">Save</button>
-                        </div>
-                           <br><br><br>
-                           
-                           
-                                 
-                              <h4 class="col-md-6 position-static p-4 pl-md-0">
-                              <a  th:href= "@{/customers/list}" class="stretched-link">Back To Customers Form</a>
-                             </h4>
-                                       
-                                                    
-                    </form>
-                </div>
-              </div>    
-                    
-            </div>
-        </div>
- 
-      <!-- Jquery JS-->
-    <script src="../../vendor/jquery/jquery.min.js"></script>
-     <script src="../../vendor/jquery/jquery-3.4.1.js"></script>
-     
-    
-    <!-- Vendor JS-->
-    <script src="../../vendor/select2/select2.min.js"></script>
-    
-   
+       
+     </form>
+   </div>     
 
-    <!-- Main JS-->
-    <script src="../../js/global.js"></script>
-   </div> 
 </body>
 
 </html>

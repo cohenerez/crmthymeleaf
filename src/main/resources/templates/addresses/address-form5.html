@@ -81,17 +81,13 @@ $(document).ready(function(){
 <div th:fragment="addressform"  class="address-block">
     
 
-    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-        <div class="wrapper wrapper--w790">
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Customer Directory</h2>
-                </div>
+    
+               
                 <div class="card-body">
-                    <form  name="myform"  action = "#" th:action = "@{/addresses/save}"  th:object= "${address}" method = "POST">
-                         <div>
-                              <input type="hidden" th:field="*{id}" >
-                          </div>
+                
+                   
+   <form th:action="@{/addresses/shwoFromToAddAddress}"  th:object= "${address}" class="form-inline">
+                    
                         
              
        
@@ -195,8 +191,7 @@ $(document).ready(function(){
                 </div>
               </div>    
                     
-            </div>
-        </div>
+       
  
       <!-- Jquery JS-->
     <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -210,7 +205,7 @@ $(document).ready(function(){
 
     <!-- Main JS-->
     <script src="../../js/global.js"></script>
-   </div> 
+ 
 </body>
 
 </html>

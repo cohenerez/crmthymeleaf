@@ -20,69 +20,13 @@
 
     <!-- Vendor CSS-->
     <link href="../../vendor/select2/select2.min.css" rel="stylesheet" media="all">
-   
+    <link href="../../vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
     <!-- Main CSS-->
     <link href="../../css/customer.main.css" rel="stylesheet" media="all">
-    <script th:src="@{../../vendor/jquery/jquery-3.4.1.js}" type="text/javascript"></script>
-    <script type="text/javascript">
-$(document).ready(function(){
-
-	$('#addresschckbox').on('change', function(){
-
-		 $(this).val( $(this).find("option[selected]").val() );
-		$('#address-form').toggle();
-		
-		
-	});
-
-	
-	$('#comboboxCountry').on('change', function(){
-		var countryId = $(this).val();
-		var countryName = $('#comboboxCountry').find(":selected").text();
-		var url = "./country/" + countryId + "/"  + countryName;
-		$.ajax({
-			
-			type: 'GET',
-			
-			url: url,
-			success: function(result) {
-				var result = JSON.parse(result);
-				var s = '';
-				for(var i = 0; i < result.length; i++) {
-					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
-					
-				}
-				$('#comboboxState').html(s);
-			}
-		});
-	});
-
-	
-	
-	$('#comboboxState').on('change', function(){
-		var stateId = $(this).val();
-		var stateName = $('#comboboxState').find(":selected").text();
-		var url = "./state/" + stateId + "/"  + stateName;
-	
-		
-		$.ajax({
-			type: 'GET',
-			url: url,
-			success: function(result) {
-				var result = JSON.parse(result);
-				var s = '';
-				for(var i = 0; i < result.length; i++) {
-					s += '<option value="' + result[i].name + '">' + result[i].name + '</option>';
-				}
-				$('#comboboxCity').html(s);
-			}
-		});
-	});
-	
-	
-	
-});
-</script>
+    
+     
+  
     
 </head>
 <body>
@@ -155,8 +99,7 @@ $(document).ready(function(){
                                 </div>
                             </div>
                         </div>
-                       
-                      
+
                         <div class="form-row">
                             <div class="name">Sales Rep</div>
                             <div class="value">
@@ -176,98 +119,26 @@ $(document).ready(function(){
                                 </div>
                             </div>
                         </div>
-                        
-                                         
+     
+                           <div>
+                          
+                          
+                           <h5 class="col-md-4 position-static p-4 pl-md-0">
+                              <a  th:href= "@{/addresses/shwoFromToAddAddress}" class="stretched-link">Add Customer Address</a>
+                             </h5>
+                          
+                           </div>
+                  
                     <div class="form-row">
-                      <div class="name"> <span id= "slider-label"> Add Address </span></div>
+                      <div class="name">Add Address</div>
                          <div class="value">
                          <label class="switch">
-                            <input type="checkbox" id="addresschckbox" name="addresschckbox" value="addaddress">
+                            <input type="checkbox" id="addresschckbox">
                              <span class="slider round"></span>
                            </label>
                         </div>
                       </div>
-        <div id= "address-form" style="display:none" >      
-      <div class="form-row">
-    <div class="name">Country</div>
-       <div class="value">
-           <div class="input-group">
-              <div class="rs-select2 js-select-simple select--no-search">
-               <select name="country" id="comboboxCountry"  th:field="*{address.country}" >
-                 <option  value="" >Select Country </option>
-                   <option th:each="country : ${countries}"
-                      th:value="${country.id}"
-                         th:attr="value = ${country.name}"
-                          th:id="${country.id}"
-                           th:text="${country.name}">
-                                  </option> 
-                                     </select>
-                           <div class="select-dropdown"></div>
-                                 </div>
-                            </div>
-                        </div>
-                  </div>
-       
-                    
-           <div class="form-row">
-                            <div class="name">State</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxState" name="state" th:field="*{address.state}"> 
-                                          <option  value="" >Choose state </option>   
-                                                                 
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>        
-                      <div class="form-row">
-                            <div class="name">City</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxCity" name="city" th:field="*{address.city}"> 
-                                          <option  value="" >Choose city </option>   
-                                                                       
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-       
-        
-        <div class="form-row">
-            <div class="name">Street</div>
-           <div class="value">
-             <div class="input-group">
-                <input class="input--style-5" type="text" th:field= "*{address.street}" name="street"  placeholder="Street">
-                 </div>
-           </div>
-     </div>
-     
-      
-     
-          <div class="form-row">
-            <div class="name">Zip Code</div>
-           <div class="value">
-             <div class="input-group">
-                <input class="input--style-5" type="text" th:field= "*{address.zip}" name="zip"  placeholder="Zip Code">
-                </div>
-           </div>
-       </div>               
-       
-      <div class="form-row">
-            <div class="name">Territory</div>
-           <div class="value">
-             <div class="input-group">
-                <input class="input--style-5" type="text" th:field= "*{address.territory}" name="territory"  placeholder="Territory">
-              </div>
-           </div>
-     </div>
-         </div>   
+                   
                    
                    
                      <br><br>
@@ -297,7 +168,8 @@ $(document).ready(function(){
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
     <script src="../../vendor/select2/select2.min.js"></script>
-    
+    <script src="../../vendor/datepicker/moment.min.js"></script>
+    <script src="../../vendor/datepicker/daterangepicker.js"></script>
 
     <!-- Main JS-->
     <script src="../../js/global.js"></script>

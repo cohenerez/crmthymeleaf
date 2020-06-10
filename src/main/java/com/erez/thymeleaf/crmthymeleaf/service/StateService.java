@@ -5,6 +5,6 @@ import com.erez.thymeleaf.crmthymeleaf.entity.StateDTO;
 
 public interface StateService {
 	
-	public List<StateDTO> findByCountry(int id);
+	public List<StateDTO> findByCountryId(Integer id);
 
 }

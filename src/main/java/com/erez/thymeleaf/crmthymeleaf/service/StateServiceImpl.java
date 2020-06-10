@@ -24,11 +24,10 @@ public class StateServiceImpl implements StateService {
 	}
 
 
-
 	@Override
-	public List<StateDTO> findByCountry(int id) {
-		return stateRepository.findByCountry(id);
+	public List<StateDTO> findByCountryId(Integer id) {
+		return stateRepository.findByCountryId(id);
 	}
-	
+
 
 }

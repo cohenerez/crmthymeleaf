@@ -13,11 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -43,7 +43,7 @@ public class Customer {
 	
 	@NotBlank(message= "pleace  insert company name ")
 	@Size(min=3, max=32, message="First name must be between 3 and 32 characters")
-	@Column(name="customer_name")
+	@Column(name="customerName")
 	@SerializedName("customerName")
 	@Expose
 	private String customerName;
@@ -64,7 +64,7 @@ public class Customer {
 	
 	@NotNull
 	@NotBlank(message= "pleace  insert phone number ")
-	@Pattern(regexp = "\\d{10}", message="Please enter valid phone number")
+	//@Pattern(regexp = "\\d{10}", message="Please enter valid phone number")
 	@Column(name="phone")
 	private String phone;
 	
@@ -83,12 +83,16 @@ public class Customer {
 	@ManyToOne( cascade= { CascadeType.DETACH,CascadeType.MERGE, 
 	                   CascadeType.PERSIST ,CascadeType.REFRESH} )
 	@JoinColumn(name ="sales_rep_employee_id" )
+	@NotNull
+    @Valid
 	private SalesRepresentative  salesRepresentative;
 
 	
 	 @OneToOne(cascade=CascadeType.ALL)
      @JoinColumn(name = "address_id")
-    private Address address;	
+	 @NotNull
+	 @Valid
+	 private Address address;	
 	
 		
 	public Customer() {

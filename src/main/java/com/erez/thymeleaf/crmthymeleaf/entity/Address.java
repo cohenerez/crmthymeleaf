@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 
@@ -26,19 +29,34 @@ import javax.persistence.Table;
 		
 		
 		@Column(name="city")
+		@NotNull
+		@NotBlank(message= "pleace  insert city name ")
+		@Size(min=3, max=32, message="city name must be between 3 and 32 characters")
 		private String city;
 		
 		
 		@Column(name="street")
+		@NotNull
+		@NotBlank(message= "pleace  insert street name ")
+		@Size(min=3, max=32, message="street name must be between 3 and 32 characters")
 		private String street;
 		
+		
 		@Column(name="state")
+		@NotNull
+		@NotBlank(message= "pleace  insert state name ")
+		@Size(min=3, max=32, message="state name must be between 3 and 32 characters")
 		private String state;
 		
 		@Column(name="zip")
+		@NotNull
+		@NotBlank(message= "pleace  insert zip number ")
+		@Size(min=3, max=32, message="zip must be between 5 and 10 characters")
 		private String zip;
 		
 		@Column(name ="country")
+		@NotNull
+		@NotBlank(message= "pleace  insert country name ")
 		private String country;
 				
 		@Column(name ="territory")

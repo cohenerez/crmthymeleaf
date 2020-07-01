@@ -2,9 +2,14 @@ package com.erez.thymeleaf.crmthymeleaf.dao;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 import com.erez.thymeleaf.crmthymeleaf.entity.Customer;
+
+
+
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
@@ -13,4 +18,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 		
 		// search by name
 		public List<Customer> findByCustomerNameContainsOrContactLastNameContainsAllIgnoreCase(String customerName, String contactLastName);
+		
+			
 }

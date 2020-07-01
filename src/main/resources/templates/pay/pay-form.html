@@ -2,15 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link th:href="@{/css/paypal.main.css}" rel="stylesheet" media="screen"/>
+   
+     <link th:href="@{/css/font-awesome-4.7.0/css/vendor/font-awesome.min.css}" rel="stylesheet" media="screen"/>
+      <link th:href="@{/css/paypal.main.css}" rel="stylesheet" media="screen"/>
 
 </head>
 <body>
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form method="post"  action="/pay">
+           <form  name="payform"  action = "#" th:action = "@{/pay}" th:object= "${order}" method = "POST">
                 <div class="col-50">
                     <h3>Payment</h3>
                     <label>Accepted Cards</label>
@@ -21,15 +22,15 @@
                         <i class="fa fa-cc-discover" style="color:orange;"></i>
                     </div>
                     <label for="price">Total</label>
-                    <input type="text" id="price" name="price" value="10">
+                    <input type="text" id="price" name="price"  th:field= "*{price}" value="10">
                     <label for="currency">Currency</label>
-                    <input type="text" id="currency" name="currency" placeholder="Enter Currency">
+                    <input type="text" id="currency" name="currency" th:field= "*{currency}" placeholder="Enter Currency">
                     <label for="method">Payment Method</label>
-                    <input type="text" id="method" name="method" placeholder="Payment Method">
+                    <input type="text" id="method" name="method"  th:field= "*{method}" placeholder="Payment Method">
                     <label for="intent">Intent</label>
-                    <input type="text" id="intent" name="intent" value="sale">
+                    <input type="text" id="intent" name="intent"  th:field= "*{intent}" value="sale">
                     <label for="description">Payment Description</label>
-                    <input type="text" id="description" name="description" placeholder="Payment Description">
+                    <input type="text" id="description" name="description"  th:field= "*{description}" placeholder="Payment Description">
 
                 </div>
 

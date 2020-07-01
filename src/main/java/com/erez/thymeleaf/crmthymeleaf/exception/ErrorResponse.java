@@ -10,7 +10,7 @@ public class ErrorResponse {
 		this.message = message;
 	}
 
-public ErrorResponse() {
+    public ErrorResponse() {
 		
 		
 	}

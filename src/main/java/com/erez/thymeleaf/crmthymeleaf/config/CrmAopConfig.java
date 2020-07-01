@@ -7,6 +7,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan("com.erez.thymeleaf.crmthymeleaf.*")
-public class CrmAopConfig {
+public class CrmAopConfig  {
 
 }

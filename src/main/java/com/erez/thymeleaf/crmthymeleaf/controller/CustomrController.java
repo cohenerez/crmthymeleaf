@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,7 +43,6 @@ public class CustomrController {
 
 	private CustomerService customerService;
 	private SalesRepresentativeService salesRepresentativeService;
-	private List<SalesRepresentative> theSalesRepresentatives;
 	private CountryService countryService;
 	private StateService stateService;
 	private CityService cityService;
@@ -60,25 +60,24 @@ public class CustomrController {
         countryService = theCountryService;
         stateService = theStateService;
         cityService = theCityService;
-	}
+       	}
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
+	
 	@GetMapping("/showFormForAddCustomer")
 	public String showFormForAddCustomer(Model theModel ) {
 
 		Customer theCustomer = new Customer();
-		SalesRepresentative salesRepresentative = new SalesRepresentative();
-		Address address = new 	Address();	
-		theCustomer.setAddress(address);
-		theCustomer.setSalesRepresentative(salesRepresentative);
-		theSalesRepresentatives = salesRepresentativeService.getSalesRepresentatives();
+		theCustomer.setAddress(new 	Address());
+		theCustomer.setSalesRepresentative(new SalesRepresentative());
+		
 
 		theModel.addAttribute("customer", theCustomer);
-		theModel.addAttribute("salesRepresentatives", theSalesRepresentatives);
+		theModel.addAttribute("salesRepresentatives", salesRepresentativeService.getSalesRepresentatives());
 		theModel.addAttribute("countries", countryService.findAll());
 				
 		return "customers/customer-form";
@@ -143,41 +142,71 @@ public class CustomrController {
 	public String saveCustomer(@ModelAttribute("customer")  @Valid Customer theCustomer ,
 			BindingResult bindingResult ,Model theModel) {
 
+		
+		Address theAddress = Optional.ofNullable(theCustomer.getAddress()).orElse(( new Address() ));
+		theCustomer.setAddress(theAddress);
+		theCustomer.getAddress().setCountry(counttryName);
+		theCustomer.getAddress().setState(stateName);
+		
 		if (bindingResult.hasErrors()) {
-
-			SalesRepresentative salesRepresentative = new SalesRepresentative();
-			Address address = new 	Address();	
-			theCustomer.setAddress(address);
-			theCustomer.setSalesRepresentative(salesRepresentative);
-			
-			theSalesRepresentatives = salesRepresentativeService.getSalesRepresentatives();
-			theModel.addAttribute("customer", theCustomer);
-			theModel.addAttribute("salesRepresentatives", theSalesRepresentatives);
+           
+			theAddress = Optional.ofNullable(theCustomer.getAddress()).orElse(( new Address() ));
+			theCustomer.setAddress(theAddress);
+			theCustomer.getAddress().setCountry(counttryName);
+			theCustomer.getAddress().setState(stateName);
 						
+			SalesRepresentative Salesrep = Optional.ofNullable(theCustomer.getSalesRepresentative()).orElse(( new SalesRepresentative()  ));
+			theCustomer.setSalesRepresentative(Salesrep);
+			
+		
+			theModel.addAttribute("salesRepresentatives", salesRepresentativeService.getSalesRepresentatives());
+			theModel.addAttribute("countries", countryService.findAll());
+			theModel.addAttribute("customer",theCustomer);
 			return "customers/customer-form";
 
 		}
-		theCustomer.getAddress().setCountry(counttryName);
-		theCustomer.getAddress().setState(stateName);
-		counttryName ="";
-		stateName= "";
+		
+		
 		customerService.saveCustomer(theCustomer);
 		  
 		   return "redirect:/customers/list";
 	}
 
+	
+	
 	@ExceptionHandler({ Exception.class })
 	@GetMapping("/showFormForUpdatCustomer")
 	public String showFormForUpdateCustomer(@RequestParam("custumerId") Integer  theId ,Model theModel ) {
 		
-		Customer theCustomer = customerService.getCustomer(theId);
-		theModel.addAttribute("customer",theCustomer);
+		Customer theCustomer;
+		try {
+			theCustomer = customerService.getCustomer(theId);
+
+			Address theAddress = Optional.ofNullable(theCustomer.getAddress()).orElse(( new Address() ));
+			theCustomer.setAddress(theAddress);
+			
+			SalesRepresentative Salesrep = Optional.ofNullable(theCustomer.getSalesRepresentative()).orElse(( new SalesRepresentative()  ));
+			theCustomer.setSalesRepresentative(Salesrep);
+			theModel.addAttribute("salesRepresentatives", salesRepresentativeService.getSalesRepresentatives());
+			theModel.addAttribute("countries", countryService.findAll());
+			theModel.addAttribute("customer",theCustomer);
+		
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+	
+		
+		
 		return "customers/customer-form";
 
 	}
 
 	@ResponseBody
-	@GetMapping("country/{id}/{name}")
+	@RequestMapping(value={"/showFormForUpdatCustomer/country/{id}/{name}" ,"/country/{id}/{name}", "/save/country/{id}/{name}"}
+	, method = RequestMethod.GET)
 	public String loadStatesByCountry(@PathVariable Integer id, @PathVariable String name) {
 		counttryName ="";
 		Gson gson = new Gson();
@@ -185,8 +214,20 @@ public class CustomrController {
 		return gson.toJson(stateService.findByCountryId(id));
 	}
 
+
+    @RequestMapping(value= "/customerNameAutocomplete")
+    @ResponseBody
+   public List<String> customerNameAutocomplete( @RequestParam(value = "term", required = false ,defaultValue="") String term){
+	
+	 return null;
+	 
+ }
+
+
 	@ResponseBody
-	@GetMapping("state/{id}/{name}")
+	@RequestMapping(value = {
+			"state/{id}/{name}","showFormForUpdatCustomer/state/{id}/{name}", "/save/state/{id}/{name}" } ,
+			 method = RequestMethod.GET	)
 	public String loadCitiesByState(@PathVariable Integer id, @PathVariable String name) {
 		stateName ="";
 		System.out.println("State name and id: "+ " " + id +"   " + name);
@@ -195,6 +236,7 @@ public class CustomrController {
 		return gson.toJson(cityService.findByStateId(id)); 
 
 }
+	
 	
 	
 }

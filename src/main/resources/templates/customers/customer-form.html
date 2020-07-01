@@ -162,7 +162,7 @@ $(document).ready(function(){
                             <div class="value">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="salesRepresentative" id="idSalesRepresentative"  th:field="*{salesRepresentative}" >
+                                        <select name="salesRepresentative" id="idSalesRepresentative"  th:field="*{salesRepresentative}" th:required="true" >
                                             <option  value="" >Choose Sales Rep </option>
                                             <option th:each="salesRepresentative : ${salesRepresentatives}"
                                                     th:value="${salesRepresentative.id}"
@@ -193,11 +193,11 @@ $(document).ready(function(){
        <div class="value">
            <div class="input-group">
               <div class="rs-select2 js-select-simple select--no-search">
-               <select name="country" id="comboboxCountry"  th:field="*{address.country}" >
+               <select name="country" id="comboboxCountry"  th:field="*{address.country}" th:required="true">
                  <option  value="" >Select Country </option>
                    <option th:each="country : ${countries}"
                       th:value="${country.id}"
-                         th:attr="value = ${country.name}"
+                         th:attr="value = ${country.id}"
                           th:id="${country.id}"
                            th:text="${country.name}">
                                   </option> 
@@ -214,7 +214,7 @@ $(document).ready(function(){
                             <div class="value">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxState" name="state" th:field="*{address.state}"> 
+                                       <select  id="comboboxState" name="state" th:field="*{address.state}" th:required="true"> 
                                           <option  value="" >Choose state </option>   
                                                                  
                                         </select>
@@ -228,7 +228,7 @@ $(document).ready(function(){
                             <div class="value">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
-                                       <select  id="comboboxCity" name="city" th:field="*{address.city}"> 
+                                       <select  id="comboboxCity" name="city" th:field="*{address.city}" th:required="true"> 
                                           <option  value="" >Choose city </option>   
                                                                        
                                         </select>
@@ -244,6 +244,7 @@ $(document).ready(function(){
            <div class="value">
              <div class="input-group">
                 <input class="input--style-5" type="text" th:field= "*{address.street}" name="street"  placeholder="Street">
+                <p th:if="${#fields.hasErrors('address.street')}" th:errors="*{address.street}" th:class="'error'">something</p>
                  </div>
            </div>
      </div>
@@ -255,6 +256,7 @@ $(document).ready(function(){
            <div class="value">
              <div class="input-group">
                 <input class="input--style-5" type="text" th:field= "*{address.zip}" name="zip"  placeholder="Zip Code">
+                <p th:if="${#fields.hasErrors('address.zip')}" th:errors="*{address.zip}" th:class="'error'">something</p>
                 </div>
            </div>
        </div>               

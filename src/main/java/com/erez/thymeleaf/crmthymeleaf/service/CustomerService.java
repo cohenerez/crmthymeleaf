@@ -11,6 +11,7 @@ import com.erez.thymeleaf.crmthymeleaf.exception.RemoteServiceNotAvailableExcept
 
 import com.erez.thymeleaf.crmthymeleaf.entity.Customer;
 
+
 public interface CustomerService {
 	
 	 public List<Customer> getCustomers();
@@ -28,7 +29,9 @@ public interface CustomerService {
 	
 	 public Page<Customer> searchCustomerByName(String theName, Pageable pageable );
 	 
+	
+	 
 	 @Recover
-		public String getBackendResponseFallback(RuntimeException e);
+	public String getBackendResponseFallback(RuntimeException e);
 
 }

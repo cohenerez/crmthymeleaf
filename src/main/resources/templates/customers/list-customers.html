@@ -9,9 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-  
-     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-     
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+   
+   
                                                      
 
 </head>
@@ -40,8 +48,8 @@
     </form>	
       
       
-      
-    <table class= "table table-bordered table-striped">
+
+    <table class= "table table-bordered table-striped"   th:id="customerTable">
 		<thead class = "thead-dark">
 			<tr>
 				<th>Customer Name</th>
@@ -55,27 +63,47 @@
 		</thead>
 		
 		<tbody>
+		
 			<tr th:each="tempCustomr : ${customerPage.content}">
 			
-				<td th:hidden ="${tempCustomr.id}" />
+				<td th:hidden ="${tempCustomr.id}" th:id="customerId"  />
 				 <td>
-                 <a th:href="@{/customers/showFormForUpdatCustomer/(custumerId=${tempCustomr.id})}"
-                  th:text="${tempCustomr.customerName}" > 
+                 <a th:href="@{/customers/showFormForUpdatCustomer/(customerId=${tempCustomr.id})}"
+                  th:text="${tempCustomr.customerName}"  id ="customerName"> 
                                    
                  </a>
                     </td>
 			
-				<td th:text="${tempCustomr.contactFirstName}" />	
-				<td th:text="${tempCustomr.contactLastName}" />	
-				<td th:text="${tempCustomr.phone}" />	
-				<td th:text="${tempCustomr.email}" />
-				<td th:text="${tempCustomr.creditLimit}" />
-			  	<td>
-			  	
+				<td th:text="${tempCustomr.contactFirstName}"  th:id="contactFirstName"/>
+				<td th:text="${tempCustomr.contactLastName}" th:id ="contactLastName"/>
+				<td th:text="${tempCustomr.phone}"  th:id ="phone"/>
+				<td th:text="${tempCustomr.email}"   th:id ="email" />
+				<td th:text="${tempCustomr.creditLimit}" th:id ="creditLimit" />
+			  	<td class="text-center">
+			  	    <form action="#" th:action="@{/customers/delete}"  name ="deletForm" method="POST">
+			  	    
+			  	   <input type="hidden" name="theCustomerId" th:value="${tempCustomr.id}" />
+				  
+				    <button type="submit" 
+				    
+				         onclick="if (!(confirm('Are you sure you want to delete this customer ?'))) return false">
+								Delete
+				    
+                          <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+				  				 
+				  </form>
 			      </td>
 			  	</tr>
 		</tbody>		
 	</table>
+
+	  <div id="resultMsgDiv">
+
+	  </div>
+
+
+
 	<hr>
 	
 
@@ -111,14 +139,23 @@
         </li>
     </ul>
 </nav>
-   
-	
-   
-</div>
 
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+
+  </div>
+
+
+ 
+  
+     
+
+
+
+
+
+
 </body>
 
 </html>

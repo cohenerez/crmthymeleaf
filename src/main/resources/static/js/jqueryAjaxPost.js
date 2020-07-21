@@ -9,7 +9,8 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type : "DELETE",
-			url : window.location + "customer/delete/" + customerId,
+			url : "./delete/" + customerId,
+
 			success: function(resultMsg){
 				$("#resultMsgDiv").html("<p style='background-color:#67597E; color:white; padding:20px 20px 20px 20px'>" +
 											"Customer with Id=" + customerId + " is deleted successfully!"  +
@@ -22,7 +23,7 @@ $(document).ready(function() {
 				$( "#customerTable tbody tr:even" ).addClass("success");
 			},
 			error : function(e) {
-				alert("ERROR: ", e);
+				//alert("ERROR: ", e);
 				console.log("ERROR: ", e);
 			}
 		});

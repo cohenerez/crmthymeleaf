@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -13,20 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.erez.thymeleaf.crmthymeleaf.entity.Address;
 import com.erez.thymeleaf.crmthymeleaf.entity.Customer;
 import com.erez.thymeleaf.crmthymeleaf.entity.SalesRepresentative;
+import com.erez.thymeleaf.crmthymeleaf.exception.NoRecordFoundException;
 import com.erez.thymeleaf.crmthymeleaf.service.CityService;
 import com.erez.thymeleaf.crmthymeleaf.service.CountryService;
 import com.erez.thymeleaf.crmthymeleaf.service.CustomerService;
@@ -39,6 +33,7 @@ import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/customers")
+
 public class CustomrController {
 
 	private CustomerService customerService;
@@ -176,11 +171,11 @@ public class CustomrController {
 	
 	@ExceptionHandler({ Exception.class })
 	@GetMapping("/showFormForUpdatCustomer")
-	public String showFormForUpdateCustomer(@RequestParam("custumerId") Integer  theId ,Model theModel ) {
+	public String showFormForUpdateCustomer(@RequestParam("customerId") Integer  customerId ,Model theModel ) {
 		
 		Customer theCustomer;
 		try {
-			theCustomer = customerService.getCustomer(theId);
+			theCustomer = customerService.getCustomer(customerId);
 
 			Address theAddress = Optional.ofNullable(theCustomer.getAddress()).orElse(( new Address() ));
 			theCustomer.setAddress(theAddress);
@@ -197,16 +192,15 @@ public class CustomrController {
 			e.printStackTrace();
 		}
 		
-	
-		
-		
 		return "customers/customer-form";
-
 	}
+	
 
 	@ResponseBody
-	@RequestMapping(value={"/showFormForUpdatCustomer/country/{id}/{name}" ,"/country/{id}/{name}", "/save/country/{id}/{name}"}
-	, method = RequestMethod.GET)
+	@RequestMapping(value={"/showFormForUpdatCustomer/country/{id}/{name}" ,
+			                "/country/{id}/{name}",
+			                 "/save/country/{id}/{name}"}
+	                         , method = RequestMethod.GET)
 	public String loadStatesByCountry(@PathVariable Integer id, @PathVariable String name) {
 		counttryName ="";
 		Gson gson = new Gson();
@@ -215,6 +209,7 @@ public class CustomrController {
 	}
 
 
+	
     @RequestMapping(value= "/customerNameAutocomplete")
     @ResponseBody
    public List<String> customerNameAutocomplete( @RequestParam(value = "term", required = false ,defaultValue="") String term){
@@ -224,19 +219,123 @@ public class CustomrController {
  }
 
 
-	@ResponseBody
-	@RequestMapping(value = {
-			"state/{id}/{name}","showFormForUpdatCustomer/state/{id}/{name}", "/save/state/{id}/{name}" } ,
-			 method = RequestMethod.GET	)
-	public String loadCitiesByState(@PathVariable Integer id, @PathVariable String name) {
-		stateName ="";
-		System.out.println("State name and id: "+ " " + id +"   " + name);
-		stateName = name;
-		Gson gson = new Gson();
-		return gson.toJson(cityService.findByStateId(id)); 
-
+       @ResponseBody
+	   @RequestMapping(value = {"state/{id}/{name}",
+			                 "showFormForUpdatCustomer/state/{id}/{name}",
+			                 "/save/state/{id}/{name}" } , method = RequestMethod.GET	)
+  	     public String loadCitiesByState(@PathVariable Integer id, @PathVariable String name) {
+		      stateName ="";
+		      System.out.println("State name and id: "+ " " + id +"   " + name);
+		      stateName = name;
+		      Gson gson = new Gson();
+		      return gson.toJson(cityService.findByStateId(id));
 }
+
+
+//	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+//	@ResponseBody
+//	public  String delete(@RequestParam Integer customerId, @RequestParam String customerName , @RequestParam String status) {
+//		    Gson gson = new Gson();
+//		    Response customerResponse = new Response();
+//		    customerResponse.setCustomerId(customerId);
+//		    customerResponse.setCustomerName(customerName);
+//
+//		try {
+//
+//			 customerService.deleteCustomer(customerId);
+//			 customerResponse.setStatus("Done");
+//
+//		}
+//		catch (NoRecordFoundException nr) {
+//			  customerResponse.setStatus("Error");
+//			 return gson.toJson(customerResponse);
+//		}
+//
+//		return gson.toJson(customerResponse);
+//
+//
+//	}
+
+//	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
+//	public @ResponseBody Response deleteCustomerAjax( @RequestBody Response customerResponse) {
+//		try {
+//			  customerService.deleteCustomer(customerResponse.getCustomerId());
+//			  customerResponse.setStatus("Done");
+//		}
+//		catch (NoRecordFoundException nr) {
+//			customerResponse.setStatus("Error");
+//			return customerResponse;
+//		}
+//		return customerResponse;
+//	}
+
+//	@ResponseBody
+//	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+//	public String deleteCustomer(@PathVariable("id") Integer theId) {
+//        Gson gson = new Gson();
+//		Response customerResponse = new Response();
+//		try {
+//			customerService.deleteCustomer(theId);
+//			customerResponse.setStatus("Done");
+//
+//		}
+//		catch (NoRecordFoundException nr) {
+//			customerResponse.setStatus("Error");
+//			customerResponse.setCustomerId(theId);
+//
+//
+//		}
+//		return gson.toJson(customerResponse);
+//	}
+//
+//	@ResponseBody
+//	@DeleteMapping(value = "/delete/{id}")
+//	public String deleteCustomer(@PathVariable Integer id) {
+//		Gson gson = new Gson();
+//		Response customerResponse = new Response();
+//
+//		try {
+//
+//			customerService.deleteCustomer(id);
+//			customerResponse.setStatus("Done");
+//
+//
+//		}
+//		catch (NoRecordFoundException nr) {
+//
+//			customerResponse.setStatus("Error");
+//			customerResponse.setCustomerId(id);
+//
+//
+//		}
+//		return gson.toJson(customerResponse);
+//	}
+
+       
+       @PostMapping("/delete")
+       public String  deleteCustomerById(@RequestParam( value = "theCustomerId") Integer theId, HttpServletRequest request) {
+
+    	   
+    	  
+         try {
+
+   			   customerService.deleteCustomer(theId);
+   			
+
+   		}
+   		catch (NoRecordFoundException nr) {
+
+   			nr.printStackTrace();
+
+   		}
+         String referer = request.getHeader("Referer");
+         return "redirect:"+ referer;
+		
+       
 	
-	
-	
+   	
+
+         
+       }
+
 }

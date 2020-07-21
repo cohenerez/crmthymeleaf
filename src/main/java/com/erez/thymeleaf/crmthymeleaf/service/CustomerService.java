@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
+
+import com.erez.thymeleaf.crmthymeleaf.exception.NoRecordFoundException;
 import com.erez.thymeleaf.crmthymeleaf.exception.RemoteServiceNotAvailableException;
 
 import com.erez.thymeleaf.crmthymeleaf.entity.Customer;
@@ -21,7 +23,7 @@ public interface CustomerService {
 	 @Retryable(value = { RemoteServiceNotAvailableException.class }, maxAttempts = 3, backoff = @Backoff(delay = 1000))
 	 public Customer getCustomer(Integer theId);
 
-	 public void deleteCustomer(Integer theId);
+	 public boolean deleteCustomer(Integer theId) throws NoRecordFoundException;
 	
 	 public List<Customer> searchCustomerByName(String theName);
 	
